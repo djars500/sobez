@@ -1,0 +1,173 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/b-style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+    <title>Мұқтаж жандарға көмек</title>
+</head>
+
+<body>
+    <div class="b__header">
+        <div class="container">
+            <nav class="b__header-nav">
+                <div style="display:flex; align-items:center;">
+                    <div class="b-header-logo">
+                        <img src="{% static '/images/new-logo.png' %}" alt="">
+                        <div>СОБЕС</div>
+                    </div>
+                    <ul class="b__header-menu">
+                        <li class="b__header-menu-item"><a class="b__header-menu-link" href="{% url 'needy_list' %}">Басты бет</a></li>
+                        <li class="b__header-menu-item"><a class="b__header-menu-link" href="#">Контакт</a></li>
+           
+                        </li>
+                    </ul>
+                </div>
+                <a href="{% url 'login' %}" class="b__btn" style="text-decoration:none;">
+                    <div >Логин</div>
+                </a>
+        </div>
+        </nav>
+    </div>
+    <div class="b__hero">
+        <div class="container b__hero-row">
+            <div class="b__hero-row-content">
+                <div class="b__hero-pre-title">Түркістан облысы, Бәйдібек ауданы</div>
+                <div class="b__hero-title"><span>Қамқорлық</span> ақпараттық жүйесі</div>
+                <div class="b__hero-desc">«Қамқорлық» бағдарламасы бойынша әлеуметтік көмекке мұқтаждар</div>
+                <div class="b__hero-help">
+                    <input class="b__hero-input" placeholder="Почтаңызды жазыңыз"></input>
+                    <div class="b__hero-btn">Көмек алу</div>
+                </div>
+            </div>
+            <div class="b__hero-row-img">
+                <img src="{% static 'images/Iamge.png' %}" alt="">
+            </div>
+        </div>
+    </div>
+
+    <div class="b__how">
+        <div class="container b__how-row">
+            <div class="b__how-content">
+                <div class="b__pretitle">
+                    Как это работает
+                </div>
+                <div class="b__title"><span>Қамқорлық</span> ақпараттық жүйесі</div>
+                <div class="b__desc">«Қамқорлық» бағдарламасы бойынша әлеуметтік көмекке мұқтаждар</div>
+                <ul class="b__how-menu">
+                    <li class="b__how-menu-item"> <span class="b__how-menu-item-dot"></span> Демеушілер</li>
+                    <li class="b__how-menu-item"> <span class="b__how-menu-item-dot"></span> Әлеуметтік топтар</li>
+                    <li class="b__how-menu-item"> <span class="b__how-menu-item-dot"></span> Қор</li>
+                </ul>
+            </div>
+            <div class="b__how-imgs">
+                <img src="{% static 'images/1.jpeg' %}" class="b__how-img b__how-img--large margin-right30"></img>
+                <div style="display: flex; flex-direction: column;">
+                    <img src="{% static 'images/2.jpeg' %}" class="b__how-img margin-bottom32" />
+                    <img src="{% static 'images/2.jpeg' %}" class="b__how-img" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="b__rat">
+        <div class="container">
+            <div class="b__title" style="margin-bottom: 19px; text-align: center; max-width: 100%;">Біздің басты мақсатымыз</div>
+            <div class="b__desc" style="text-align: center; margin-bottom: 92px; max-width: 100%;">Мұқтаж адамдарға барынша көмектесу</div>
+            <div class="b__grid">
+                <div class="b__grid-item">
+                    <div class="b__iconed">
+                        <span class="material-icons">
+                            person_outline
+                        </span>
+                    </div>
+                    <div>
+                        <div class="b__grid-item__title">Материалдық жағдай</div>
+                        <div class="b__grid-item__desc">Мұқтаждардың нақты материалдық жағдайы
+                        </div>
+                    </div>
+                </div>
+                <div class="b__grid-item">
+                    <div class="b__iconed b__iconed--red">
+                        <span class="material-icons">
+                            groups
+                        </span>
+                    </div>
+                    <div>
+                        <div class="b__grid-item__title">Қаржылай көмектер</div>
+                        <div class="b__grid-item__desc">Берілген қаржылай көмектер
+                        </div>
+                    </div>
+                </div>
+                <div class="b__grid-item">
+                    <div class="b__iconed b__iconed--yellow">
+                        <span class="material-icons">
+                            forum
+                        </span>
+                    </div>
+                    <div>
+                        <div class="b__grid-item__title">Материалдық көмектер</div>
+                        <div class="b__grid-item__desc">Берілген материалдық көмектер
+                        </div>
+                    </div>
+                </div>
+                <div class="b__grid-item">
+                    <div class="b__iconed ">
+                        <span class="material-icons">
+                            hub
+                        </span>
+                    </div>
+                    <div>
+                        <div class="b__grid-item__title">Экономикалық мүшелерер</div>
+                        <div class="b__grid-item__desc">Отбасының экономикалық белсенді мүшелері туралы ақпарат
+                        </div>
+                    </div>
+                </div>
+                <div class="b__grid-item ">
+                    <div class="b__iconed b__iconed--red">
+                        <span class="material-icons">
+                            list
+                        </span>
+                    </div>
+                    <div>
+                        <div class="b__grid-item__title">Отбасының күнкөріс ақпараты</div>
+                        <div class="b__grid-item__desc">Отбасының күнкөріс деңгейінің өзгеруі туралы (экономикалық белсенділігі) ақпарат
+                        </div>
+                    </div>
+                </div>
+                <div class="b__grid-item ">
+                    <div class="b__iconed b__iconed--yellow">
+                        <span class="material-icons">
+                            menu_book
+                        </span>
+                    </div>
+                    <div>
+                        <div class="b__grid-item__title">Толық карта</div>
+                        <div class="b__grid-item__desc">Мұқтаж отбасылар ауылдық округтік кесіндісінде
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="height: 300px;"></div>
+
+    <div class="b__footer">
+        <div class="container b__footer-row">
+            <div class="b__footer-info">Все права защищены</div>
+            <div class="b-header-logo">
+                <img src="{% static 'images/new-logo.png' %}" alt="">
+                <div style="color:white">СОБЕС</div>
+            </div>
+            <div></div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -6,7 +6,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     name = models.CharField('Аты',max_length=255, )
     surName = models.CharField('Тегі', max_length=255,)
     email = models.EmailField(max_length=254, unique=True)
-    username = models.CharField(max_length=255, null=True, blank=True)
+    username = models.CharField(max_length=255)
     image = models.ImageField(upload_to='users/', blank=True, null=True)
     is_staff = models.BooleanField(default=True)
     is_active = models.BooleanField(default=True)
@@ -17,4 +17,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     def __str__(self):
-        return self.username
+        if self.username == 'Демеуші':
+            return f"{self.username}: {self.surName} {self.name}"
+        else: 
+            return self.username
+            

@@ -3,7 +3,7 @@ import imp
 from traceback import print_tb
 from unicodedata import category
 from django.shortcuts import render
-from .models import Needy, Region, StatusHome, Category, StatusType, Event
+from .models import Needy, StatusHome, Category, StatusType, Event
 from authentication.models import User
 from django.contrib.auth.decorators import login_required
 

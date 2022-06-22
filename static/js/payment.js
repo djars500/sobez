@@ -9,6 +9,7 @@ window.onload = function() {
     const ccsingle = document.getElementById('ccsingle');
     const generatecard = document.getElementById('generatecard');
     const number_phone = document.getElementById('number_phone');
+    const amount = document.getElementById('amount');
 
 
     let cctype = null;
@@ -102,6 +103,7 @@ window.onload = function() {
     var securitycode_mask = new IMask(securitycode, {
         mask: '0000',
     });
+
 
     var phoneMask = IMask(number_phone, {
         mask: '+{7}(000)000-00-00',

@@ -114,6 +114,7 @@
         </div>
     </div>
     <form action="" , method="POST">
+        {% csrf_token %}
         <div class="form-container">
             <div class="field-container">
                 <label for="name">Name</label>
@@ -137,12 +138,16 @@
             <div class="field-container">
                 <label for="email">Email</label>
                 <input id="email" name="email" maxlength="20" type="email">
+                <label for="amount">Сумма перевода</label>
+                <input id="amount" name="amount" inputmode="numeric" pattern="[0-9]*" type="text">
             </div>
             <div class="field-container">
                 <label for="number_phone">Phone</label>
                 <input id="number_phone" name="number_phone" type="numeric">
+
             </div>
-            <button class="btn-submit" id="subm" onclick="submit()">Отправить</button>
+
+            <button class="btn-submit" id="subm" style="margin-top: 20px;" onclick="submit()">Отправить</button>
 
         </div>
     </form>

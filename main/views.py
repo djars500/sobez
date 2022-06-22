@@ -1,16 +1,17 @@
-import hashlib
-from django.shortcuts import render
+from django.http import HttpResponse
+from django.shortcuts import redirect, render
 from .models import Family, Needy, StatusHome, Category, StatusType, Event
 from authentication.models import User
 from django.contrib.auth.decorators import login_required
 from django_admin_geomap import geomap_context
 import requests
 import hashlib
-
+from random import randint
+from datetime import datetime
+import xmltodict
 def main(request):
     
     return render(request, 'landing-page.html', {})
-
 
 
 @login_required(login_url='/auth/login')
@@ -100,59 +101,57 @@ def EvenList(request):
     return render(request, 'event.html', context)
 
 def payment(request): 
-    
-    print('request')
-    print(request.GET)
-    
-    # pg_merchant_id = 544317
-    # secret_key = '28pEVtditkTilolL'
-    
-    # url = 'init_payment.php'
-    # pg_amount = 25
-    # pg_description = 'test'
-    # pg_order_id = 23
-    # pg_salt = 'ok'
-    
-    # var = {
-    #     pg_order_id: '',
-    #     pg_payment_id: 12,
-    #     pg_amount: 12,
-    #     pg_net_amount: 1,
-    #     pg_currency: 'KZT',
-    #     pg_ps_amount: 500,
-    #     pg_ps_full_amount: 500,
-    #     pg_ps_currency: 'KZT',
-    #     pg_description:'Покупка в интернет магазине Site.kz',
-    #     pg_result: 1,
-    #     pg_payment_date: '2019-01-01 12:00:00',
-    #     pg_can_reject: 1,
-    #     pg_user_phone: 7077777777777,
-    #     pg_user_contact_email: 'mail@customer.kz',
-    #     pg_testing_mode: 1,
-    #     pg_captured: 0,
-    #     pg_card_pan: '5483-18XX-XXXX-0293',
-    #     pg_salt: '123',
-    #     pg_sig: '12',
-    #     pg_payment_method: ''
-    # }
+    url = 'init_payment.php'
+    secret_key = '28pEVtditkTilolL'
+    pg_merchant_id = 544317
+    hash_object = ''
+    pg_sig = ''
+    redirect_url = ''
     
     
-    # key = f'init_payment.php;{pg_amount};{pg_description};{pg_merchant_id};{pg_order_id};{pg_salt};{secret_key}'
-    # hash_object = hashlib.md5(key.encode('utf-8')).hexdigest()
-
-    # data = {
-    #     'pg_amount':pg_amount,
-    #     'pg_description':pg_description,
-    #     'pg_merchant_id':pg_merchant_id,
-    #     'pg_order_id':pg_order_id,
-    #     'pg_salt':pg_salt,
-    #     'pg_sig': hash_object,
-    # }
-
-    # r = requests.post('https://api.paybox.money/init_payment.php', data=data)
-
-    # print(r.text)
-
+    def sort_list(var):
+        data_value = ''
+        sorted_tuple = sorted(var.items(), key=lambda x: x[0])
+        for k in sorted_tuple:
+            print(str(k[1]))
+            data_value = data_value + str(k[1])+ ';'
+        data_value = url + ';' + data_value + '' + secret_key
+        hash_object = hashlib.md5(data_value.encode('utf-8')).hexdigest()
+        return hash_object
+    
+    try:
+        if request.POST:
+            email = request.POST.get('email')
+        number_phone = request.POST.get('number_phone')
+        name = request.POST.get('name')
+        amount = request.POST.get('amount')
+        var = {
+            
+            'pg_amount':amount,
+            'pg_description':'Тест',
+            'pg_merchant_id':pg_merchant_id,
+            'pg_order_id': randint(0, 10000),
+            'pg_salt':'Тест',
+            'pg_currency': 'KZT',
+            'pg_success_url': 'https://google.com',
+            'pg_failure_url': 'https://youtube.com',
+            'pg_user_phone': 77089531792,
+            'pg_payment_method': 'bankcard', 
+            'pg_user_contact_email': email,
+        }
+        
+        pg_sig = sort_list(var)
+        var['pg_sig']= pg_sig
+        print(name)
+        
+        r = requests.post('https://api.paybox.money/init_payment.php', data=var)
+        
+        return redirect(xmltodict.parse(r.text)['response']['pg_redirect_url']) 
+    except Exception:
+        print(number_phone)
+        print('eror')
+    
+    
     return render(request, 'payment.html', {})
     
     

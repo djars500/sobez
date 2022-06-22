@@ -7,11 +7,11 @@ class CustomUserCreationForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('email', 'image', 'username', 'name', 'surName')
+        fields = ('email', 'image', 'name', 'surName')
 
 
 class CustomUserChangeForm(UserChangeForm):
 
     class Meta:
         model = User
-        fields = ('email', 'image', 'username', 'groups','name', 'surName')
+        fields = ('email', 'image', 'groups','name', 'surName')

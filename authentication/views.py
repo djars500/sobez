@@ -1,5 +1,6 @@
 from email import message
 from multiprocessing import context
+from os import name
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as signin
@@ -9,7 +10,7 @@ from django.contrib import messages
 def login(request):
     
     if request.user.is_authenticated:
-        return redirect('/')
+        return redirect('main/')
     else:
     
         email = request.GET.get('email')

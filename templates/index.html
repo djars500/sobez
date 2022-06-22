@@ -1,140 +1,91 @@
-{% load static %}
-<!DOCTYPE html>
+{% extends "base.html" %} {% load static %} {% block title %} {% comment %} {% leaflet_js %} {% leaflet_css %} {% endcomment %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
 
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <title>Main</title>
-</head>
-
-<body>
-    <div class="wrapper">
-        <div class="main">
-            <div class="sidebar" id="sidebar">
-                <div class="logo">
-                    <div id="menu-burger" class="menu-burger">
-                        <span class="material-icons">
-                            menu
-                        </span>
-                    </div>
-                    <img width="32px" src="{% static 'images/logo.png' %}" height="32px" class="logo__img"></img>
-                    <div class="logo__text">Собес</div>
-                </div>
-                <ul class="menu">
-                <li>
-                        <a class="menu__item active" href="/">
-                            <span class="material-icons">
+<link rel="stylesheet" href="{% static 'css/style2.css' %}">
+<title>{{geomap_item.user.username}}</title>
+{% endblock title %} {% block category %}
+<li>
+    <a class="menu__item active" href="{% url 'needy_list' %}">
+        <span class="material-icons">
                                 analytics
                             </span>
-                            <div class="menu__text">Басты бет</div>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="menu__item " href="{% url 'event_list' %}">
-                            <span class="material-icons">
+        <div class="menu__text">Басты бет</div>
+    </a>
+</li>
+<li>
+    <a class="menu__item" href="{% url 'event_list' %}">
+        <span class="material-icons">
                                 help
                             </span>
-                            <div class="menu__text">Аударылымдар</div>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="menu__item" href="{% url 'needy_list_detail' %}">
-                            <span class="material-icons">
+        <div class="menu__text">Аударылымдар</div>
+    </a>
+</li>
+<li>
+    <a class="menu__item " href="{% url 'needy_list_detail' %}">
+        <span class="material-icons">
                                 people
                             </span>
-                            <div class="menu__text">Мұқтаждар</div>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="menu__item" href="{% url 'needy_list_detail' %}">
-                            <span class="material-icons">
-                                people
-                            </span>
-                            <div class="menu__text">Мұқтаж отбасылар</div>
-                        </a>
-                        
-                    </li>
-                    <div class="divider"></div>
+        <div class="menu__text">Мұқтаждар</div>
+    </a>
 
-                    <li>
-                        <a class="menu__item" href="#">
-                            <span class="material-icons">
-                                check_circle
+</li>
+<li>
+    <a class="menu__item" href="{% url 'needy_family_list' %}">
+        <span class="material-icons">
+                                family_restroom
                             </span>
-                            <div class="menu__text">Көрілгендер</div>
-                        </a>
-                        <a class="menu__item" href="{% url 'logout' %}">
-                            <span class="material-icons">
+        <div class="menu__text">Мұқтаж отбасылар</div>
+    </a>
+
+</li>
+
+<div class="divider"></div>
+
+<li>
+
+    <a class="menu__item" href="{% url 'logout' %}">
+        <span class="material-icons">
                                 logout
                             </span>
-                            <div class="menu__text">Шығу</div>
-                        </a>
-                    </li>
-                    
-                </ul>
-            </div>
-            <div class="content" id="content">
-                <div class="app-bar">
-                    <div class="app-bar__left">
-                        <div class="app-bar__title"></div>
-                    </div>
-                    <div class="app-bar__right">
-                        <div class="app-bar__icons">
-                            <span class="material-icons margin-right24">
-                                notifications
-                            </span>
-                            <span class="material-icons">
-                                search
-                            </span>
-                        </div>
-                        <div class="vertical-divider"></div>
-                        <div class="profile">
-                            <div class="profile__name">{{request.user.email}}</div>
-                            <img class="profile__img" width=40px src="{% if request.user.image %}{{request.user.image.url}}{% endif %}" alt="">
-                        </div>
-                    </div>
-                </div>
-                <div class="content-bar">
-                    <div class="grid">
-                    {% for status_type in status_types %}
-                        <div class="grid__item card">
-                            <div class="card__title">{{status_type.name}}</div>
-                            <div class="card__number">{{status_type.needies.count}}</div>
-                        </div>
-                        {% endfor %}
-                        <div class="grid__item card">
-                            <div class="card__title">Барлығы</div>
-                            <div class="card__number">{{needies.count}}</div>
-                        </div>
-                    </div>
-                    <div class="grid grid--large margin-top32">
-                    {% for status_type in status_types %}
-                        <div class="grid__item card-large">
-                            <div class="card-large__top">
-                                <div class="card-large__title">{{status_type.name}}</div>
-                                <a href='detail/' style="text-decoration:none"><div class="card-large__details">Толық көру</div></a>
-                            </div>
-                            {% for needy in status_type.needies.all %}
-                            <div class="card-large__item">
-                                <div class="card-large__item-title">{{needy.user.surName}} {{needy.user.name}}</div>
-                                <div class="card-large__item-pretitle">{{needy.period}}</div>
-                            </div> 
-                            {% endfor %}
-                        </div>
-                        {% endfor %}
-                       
-                    </div>
-                </div>
+        <div class="menu__text">Шығу</div>
+    </a>
+</li>
+{% endblock category %} {% block content %}
 
-            </div>
+<div class="content-bar">
+    <div class="grid">
+        {% for status_type in status_types %}
+        <div class="grid__item card">
+            <div class="card__title">{{status_type.name}}</div>
+            <div class="card__number">{{status_type.needies.count}}</div>
+        </div>
+        {% endfor %}
+        <div class="grid__item card">
+            <div class="card__title">Барлығы</div>
+            <div class="card__number">{{needies.count}}</div>
         </div>
     </div>
+    <div class="grid grid--large margin-top32">
+        {% for status_type in status_types %}
+        <div class="grid__item card-large">
+            <div class="card-large__top">
+                <div class="card-large__title">{{status_type.name}}</div>
+                <a href='detail/' style="text-decoration:none">
+                    <div class="card-large__details">Толық көру</div>
+                </a>
+            </div>
+            {% for needy in status_type.needies.all %}
+            <div class="card-large__item">
+                <div class="card-large__item-title">{{needy.user.surName}} {{needy.user.name}}</div>
+                <div class="card-large__item-pretitle">{{needy.period}}</div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endfor %}
 
-    <script src="{% static 'js/main.js' %}"></script>
-</body>
+    </div>
+</div>
 
-</html>
+
+<script src="{% static 'js/main.js' %}"></script>
+{% endblock content %}

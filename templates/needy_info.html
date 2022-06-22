@@ -1,0 +1,138 @@
+{% extends "base.html" %} {% load static %} {% comment %} {% load leaflet_tags %} {% endcomment %} {% block title %} {% comment %} {% leaflet_js %} {% leaflet_css %} {% endcomment %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+<link rel="stylesheet" href="{% static 'css/style2.css' %}">
+<title>{{geomap_item.user.username}}</title>
+{% endblock title %} {% block category %}
+<li>
+    <a class="menu__item " href="{% url 'needy_list' %}">
+        <span class="material-icons">
+                                analytics
+                            </span>
+        <div class="menu__text">Басты бет</div>
+    </a>
+</li>
+<li>
+    <a class="menu__item" href="{% url 'event_list' %}">
+        <span class="material-icons">
+                                help
+                            </span>
+        <div class="menu__text">Аударылымдар</div>
+    </a>
+</li>
+<li>
+    <a class="menu__item active" href="{% url 'needy_list_detail' %}">
+        <span class="material-icons">
+                                people
+                            </span>
+        <div class="menu__text">Мұқтаждар</div>
+    </a>
+
+</li>
+<li>
+    <a class="menu__item" href="{% url 'needy_family_list' %}">
+        <span class="material-icons">
+                                family_restroom
+                            </span>
+        <div class="menu__text">Мұқтаж отбасылар</div>
+    </a>
+
+</li>
+
+<div class="divider"></div>
+
+<li>
+
+    <a class="menu__item" href="{% url 'logout' %}">
+        <span class="material-icons">
+                                logout
+                            </span>
+        <div class="menu__text">Шығу</div>
+    </a>
+</li>
+{% endblock category %} {% block content %}
+<div class="content-bar">
+    <div class="content-table">
+        <div class="containers">
+
+            {% for geomap_item in geomap_items %}
+            <div class="name">{{geomap_item.user.username}}</div>
+
+            <div class="img66"> <img height="211px" width="213px" src="
+            {% if geomap_item.user.image %}
+            {{geomap_item.user.image.url}}
+            {% else %}
+             {% static 'images/default2.png' %}
+            {% endif %}"> </div>
+
+            <div class="forms__inner">
+                <li class="form">
+
+                    <div class="forms">
+                        <div class="forms__type">Телефон</div>
+                        <div class="forms__value">{{geomap_item.phone}}</div>
+                    </div>
+                    <div class="forms">
+                        <div class="forms__type">Мекенжайы</div>
+                        <div class="forms__value">{{geomap_item.address}}</div>
+                    </div>
+                    <div class="forms">
+                        <div class="forms__type">ЖСН</div>
+                        <div class="forms__value">{{geomap_item.iin}}</div>
+                    </div>
+                    <div class="forms">
+                        <div class="forms__type">Отбасы</div>
+                        <a href="{% url 'family_detail' geomap_item.family.id %}" style='text-decoration:none; color:black;'>
+                            <div class="forms__value">{{geomap_item.family}}</div>
+                        </a>
+                    </div>
+                    <div class="forms">
+                        <div class="forms__type">Статус</div>
+                        <div class="forms__value">{{geomap_item.status}}</div>
+                    </div>
+                    <div class="forms">
+                        <div class="forms__type">Категориясы</div>
+                        <div class="forms__value">{{geomap_item.category}}</div>
+                    </div>
+                    <div class="forms">
+                        <div class="forms__type">Жұмыс</div>
+                        <div class="forms__value">{{geomap_item.hasJob}}({{geomap_item.canJob}})</div>
+                    </div>
+                    <div class="forms">
+                        <div class="forms__type">Көмек алудың мерзімі:</div>
+                        <div class="forms__value">{{geomap_item.period}}</div>
+                    </div>
+                    <div class="forms">
+                        <div class="forms__type">Жасалған кұні</div>
+                        <div class="forms__value">{{geomap_item.created_at}} </div>
+                    </div>
+
+                </li>
+                <li class="form">
+                    <div class="forms">
+                        <div class="forms__type">Қандай көмек алды:</div>
+                        <div class="forms__value">{{geomap_item.getHelp}}</div>
+                    </div>
+                    <div class="forms">
+                        <div class="forms__type">Қандай көмек қажет:</div>
+                        <div class="forms__value">{{geomap_item.typeHelp}}</div>
+                    </div>
+                    <div class="forms">
+                        <div class="forms__type">Пікір</div>
+                        <div class="forms__value">{{geomap_item.comment}}</div>
+                    </div>
+
+
+
+                </li>
+            </div>
+            <div>{% include "geomap/common.html" %}</div>
+            {% endfor %}
+        </div>
+
+
+    </div>
+
+</div>
+
+{% endblock content %}

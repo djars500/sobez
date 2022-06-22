@@ -1,0 +1,117 @@
+.hero {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	position: absolute;
+	width: 100%;
+	max-width: 1070px;
+	background-color: #fff;
+	border: 1px solid #DFE0EB;
+	box-sizing: border-box;
+	border-radius: 8px;
+}
+
+@media screen and (max-width: 992px) {
+    .hero {
+		display: flex;
+		flex-direction: column;
+		flex-wrap: wrap;
+		
+		width: 100%;
+		max-width: 320px;
+		background-color: #fff;
+		border: 1px solid #DFE0EB;
+		box-sizing: border-box;
+		border-radius: 8px;
+	}
+}
+
+
+.containers {
+	display: flex;
+	flex-wrap: wrap;
+	width: 100%;
+	
+	
+
+}
+.name {
+	display: flex;
+	width: 100%;
+    height: 24px;
+    color: #252733;
+    font-family: 'Mulish', sans-serif;
+	font-style: normal;
+	font-weight: 700;
+	font-size: 19px;
+	line-height: 24px;
+	margin-top: 32px;
+	margin-left: 32px;
+	margin-bottom: 0px;
+} 
+
+.img66 {
+	display: flex;
+	width: 250px;
+	height: 211px;
+	margin-top: 18px;
+	margin-left: 32px;
+
+}
+.form {
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: column;
+	
+}
+.forms {
+	margin: 5px 30px;
+	display: flex;
+	flex-wrap: wrap;
+	width: 300px;
+	
+	justify-content: space-between;
+
+}
+
+.forms__inner{
+	margin: 50px 0 0 0;
+	display: flex;
+	flex-direction: row;
+}
+
+@media screen and (max-width: 992px) {
+    .forms__inner{
+		margin: 50px 0 0 0;
+		display: block;
+	}
+}
+.forms__name {
+	display: flex;
+	left: 0px;
+
+}
+.forms__value {
+    display: flex;
+    border-bottom: 1px solid #DFE0EB;
+}
+
+.forms__type__user{
+	display: flex;
+	flex-direction: column;
+    border-bottom: 1px solid #DFE0EB;
+}
+.map {
+	margin: 50px 50px;
+	width: 743px;
+	height: 558px;
+}
+
+@media screen and (max-width: 992px) {
+    .map {
+		margin: 50px 50px;
+		width: 320px;
+		height: 320px;
+	}
+    
+}

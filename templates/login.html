@@ -1,59 +1,61 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Авторизация</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 </head>
+
 <body>
 
-<form>
+    <form>
 
-    <div class="wrapper">
-        <div class="sign">
-            <div class="sign-body">
-           
-                <div class="sign-logo">
-                    <img width="42" height="42" src="{% static 'images/logo.png' %}" alt="">
-                    <div class="sign-logo__text"></div>
-                </div>
-                <div class="sign__text">"Қамқорлық" ақпараттық жүйесі</div>
-                <div class="sign__pretext">Введите свой адрес электронной почты и пароль ниже</div>
-                {% csrf_token %}
-                
-                <div class="form-group">
-                    <div class="form-group__top">
-                        <div class="form-group__text">Почта</div>
+        <div class="wrapper">
+            <div class="sign">
+                <div class="sign-body">
+
+                    <div class="sign-logo">
+                        <img width="42" height="42" src="{% static 'images/logo.png' %}" alt="">
+                        <div class="sign-logo__text"></div>
                     </div>
-                    <div class="form__input-container">
-                        <input name="email" type="email" class="form-input" placeholder="Электронная почта">
+                    <div class="sign__text">"Қамқорлық" ақпараттық жүйесі</div>
+                    <div class="sign__pretext">Введите свой адрес электронной почты и пароль ниже</div>
+                    {% csrf_token %}
+
+                    <div class="form-group">
+                        <div class="form-group__top">
+                            <div class="form-group__text">Почта</div>
+                        </div>
+                        <div class="form__input-container">
+                            <input name="email" type="email" class="form-input" placeholder="Электронная почта">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group margin-top24">
-                    <div class="form-group__top">
-                        <div class="form-group__text">Пароль</div>
-                        <div>Забыли пароль</div>
-                    </div>
-                    <div class="form__input-container">
-                        <input type="password" name="password"  class="form-input" placeholder="Пароль">
-                        <div class="form-icon">
-                            <span class="material-icons" >
+                    <div class="form-group margin-top24">
+                        <div class="form-group__top">
+                            <div class="form-group__text">Пароль</div>
+                            <div>Забыли пароль</div>
+                        </div>
+                        <div class="form__input-container">
+                            <input type="password" name="password" class="form-input" placeholder="Пароль">
+                            <div class="form-icon">
+                                <span class="material-icons">
                                 visibility_off
                                 </span>
+                            </div>
+
                         </div>
-                        
                     </div>
+                    <button class="button" type="submit">Войти</button>
                 </div>
-                <button class="button" type="submit">Войти</button>
             </div>
         </div>
-    </div>
-</form>
+    </form>
 </body>
+
 </html>

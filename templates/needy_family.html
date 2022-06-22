@@ -1,0 +1,162 @@
+{% extends "base.html" %} {% load static %} {% block title %}
+
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+
+
+<!-- CSS only -->
+<!-- JavaScript Bundle with Popper -->
+<link rel="stylesheet" href="{% static 'css/style2.css' %}">
+<!-- CSS only -->
+<title>{{needy.user.username}}</title>
+{% endblock title %} {% block category %}
+<li>
+    <a class="menu__item " href="{% url 'needy_list' %}">
+        <span class="material-icons">
+                                analytics
+                            </span>
+        <div class="menu__text">Басты бет</div>
+    </a>
+</li>
+<li>
+    <a class="menu__item" href="{% url 'event_list' %}">
+        <span class="material-icons">
+                                help
+                            </span>
+        <div class="menu__text">Аударылымдар</div>
+    </a>
+</li>
+<li>
+    <a class="menu__item " href="{% url 'needy_list_detail' %}">
+        <span class="material-icons">
+                                people
+                            </span>
+        <div class="menu__text">Мұқтаждар</div>
+    </a>
+
+</li>
+<li>
+    <a class="menu__item active" href="{% url 'needy_family_list' %}">
+        <span class="material-icons">
+                                family_restroom
+                            </span>
+        <div class="menu__text">Мұқтаж отбасылар</div>
+    </a>
+
+</li>
+
+<div class="divider"></div>
+
+<li>
+
+    <a class="menu__item" href="{% url 'logout' %}">
+        <span class="material-icons">
+                                logout
+                            </span>
+        <div class="menu__text">Шығу</div>
+    </a>
+</li>
+{% endblock category %} {% block content %}
+
+
+
+
+
+<div class="content-bar">
+    <div class="content-table">
+        <div class="content-header">
+            <div class="content-header__title">
+                Отбасылар
+            </div>
+            <div class="content-header__actions">
+
+                <a data-bs-toggle="modal" data-bs-target="#StaticModal">
+                    <div class="filter">
+                        <span class="material-icons">
+                                        filter_alt
+                                    </span>
+                        <div>
+                            Фильтр
+                        </div>
+
+                    </div>
+                </a>
+            </div>
+        </div>
+        <table class="table">
+            <tr>
+                <th>Отбасының үлкені</th>
+                <th>Мекен жайы</th>
+                <th>Қанша адам</th>
+                <th>Жағдайы</th>
+            </tr>
+            {% for family in families %}
+            <tr>
+                <td>
+
+
+
+
+                    <div class="table__user">
+                        <a href="" style="text-decoration:none;color:black;"><img src="{% if family.needy_family.first.user.image %}{{family.needy_family.first.user.image.url}} {% else %}{% static '/images/default.png' %} {% endif %}" width="40px" alt=""></a>
+                        <div class="table__user-email">
+                            <a href="{% url 'family_detail' family.id %}" style="text-decoration:none;color:black;">
+                                <div class="table__bold">{{family.needy_family.first.user.surName}} {{family.needy_family.first.user.name}}</div>
+                            </a>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="table__bold">
+                        {{family.region}}, {{family.eldimeken}}
+                    </div>
+                    <div class="table__secondary">{% if needy.region %}{{needy.region}} {% endif %}</div>
+                </td>
+                <td>
+                    <div class="table__bold">
+                        {{family.needy_family.count}}
+
+                    </div>
+                </td>
+                <td>
+                    <div class="table__prio">
+                        <div class="table__button {% if family.needy_family.first.status.id == 1 %}red {% elif needy.status.id == 2 %}blue {% else %}green {%endif%}">
+                            {{family.needy_family.first.status}}
+                        </div>
+                        <span class="material-icons">
+                                            more_vert
+                                            </span>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+
+        </table>
+    </div>
+
+</div>
+
+<script>
+    var popover = new bootstrap.Popover(document.querySelector('.popover-example'), {
+
+        container: 'body'
+
+    })
+
+
+
+
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+
+
+
+
+    var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
+
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+
+    })
+</script>
+
+
+{% endblock content %}

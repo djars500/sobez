@@ -1,3 +1,4 @@
+from urllib import request
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from .managers import UserManager
@@ -20,5 +21,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         if self.username == 'Демеуші':
             return f"{self.username}: {self.surName} {self.name}"
         else: 
-            return self.username
+            return f"{self.surName} {self.name}"
+        
+
             

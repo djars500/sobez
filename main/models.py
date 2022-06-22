@@ -1,11 +1,34 @@
 from django.db import models
+from django.urls import reverse
 from django.utils import timezone
 from authentication.models import User
 from home.models import RuralDistrict, Localities
 from status.models import StatusHome, StatusType, Category
+from django_admin_geomap import GeoItem
 
+# from payments import PurchasedItem
+# from payments.models import BasePayment
 
+# class Payment(BasePayment):
 
+#     def get_failure_url(self) :
+#         # Return a URL where users are redirected after
+#         # they fail to complete a payment:
+#         return 'http://example.com/failure/'
+
+#     def get_success_url(self) :
+#         # Return a URL where users are redirected after
+#         # they successfully complete a payment:
+#         return 'http://example.com/success/'
+
+#     def get_purchased_items(self):
+#         yield PurchasedItem(
+#             name='The Hound of the Baskervilles',
+#             sku='BSKV',
+#             quantity=9,
+#             price=Decimal(10),
+#             currency='USD',
+#         )
 
 class Event(models.Model):
     
@@ -32,14 +55,17 @@ class Event(models.Model):
         verbose_name = 'Оқиға'
         verbose_name_plural = 'Оқигалар'
     
-class Family(models.Model):
+class Family(models.Model,GeoItem):
     
     main_family = models.ForeignKey('Needy', on_delete=models.CASCADE, null=True, blank=True, verbose_name='Отбасының үлкені', related_name='main')
     address = models.CharField('Мекен жайы', max_length=255)
     region = models.ForeignKey(RuralDistrict,verbose_name='Аулды округ', on_delete=models.CASCADE,blank=True,null=True)
-    eldimeken = models.ForeignKey(Localities, verbose_name='Аулды округ', on_delete=models.CASCADE,blank=True,null=True)
-    lat = models.FloatField('Лат',null=True,blank=True,)
-    lng = models.FloatField('Лат',null=True,blank=True,)
+    eldimeken = models.ForeignKey(Localities, verbose_name='Елдімекен', on_delete=models.CASCADE,blank=True,null=True)
+    lat = models.FloatField(
+                 null=True, blank=True )
+
+    lon = models.FloatField(
+                 null=True, blank=True)
     
     
     class Meta:
@@ -49,7 +75,24 @@ class Family(models.Model):
     def __str__(self):
         return self.address
     
-class Needy(models.Model):
+    
+    
+    @property
+    def geomap_longitude(self):
+        return str(self.lon)
+
+    @property
+    def geomap_latitude(self):
+        return str(self.lat)
+    
+    def geomap_popup_view(self):
+        return f"<a>{self.main_family}</a><br><strong>{self.address}</strong><br>"
+
+    @property
+    def geomap_popup_edit(self):
+        return self.geomap_popup_view
+    
+class Needy(models.Model, GeoItem,):
     
     
     job = (
@@ -61,7 +104,7 @@ class Needy(models.Model):
         ('Жұмысы жарамсыз','Жұмысы жарамсыз'),
     )
     
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, related_name='needy_user')
+    user = models.OneToOneField(User, on_delete=models.CASCADE,related_name='needy_user',)
     phone = models.CharField('Телефон нөмірі', max_length=11)
     address = models.CharField('Мекенжайы', max_length=255,)
     iin = models.CharField('ЖСН', max_length=12)
@@ -81,7 +124,11 @@ class Needy(models.Model):
     updated_at = models.DateTimeField("Дата изменения",auto_now=True)
     owner = models.ForeignKey(User, verbose_name="Заявканы ашқан адам", null=True, blank=True,on_delete=models.CASCADE,related_name="owner")
     changed_onwer = models.ForeignKey(User,null=True, verbose_name="Заявканы өзгерткен адам", blank=True,on_delete=models.CASCADE,related_name="changed_owner")
+    lat = models.FloatField(
+                default=43.0401635 )
 
+    lon = models.FloatField(
+                default=69.3886292)
 
     def __str__(self):
         return f'{self.user.name} {self.user.surName}'
@@ -89,5 +136,24 @@ class Needy(models.Model):
     class Meta:
         verbose_name = 'Заявка'
         verbose_name_plural = 'Заявкалар'
+    
+    @property
+    def geomap_longitude(self):
+        return str(self.lon)
+
+    @property
+    def geomap_latitude(self):
+        return str(self.lat)
+    
+    def geomap_popup_view(self):
+        return f"<strong>{self.user}</strong><br><strong>{self.address}</strong><br>"
+
+    @property
+    def geomap_popup_edit(self):
+        return self.geomap_popup_view
+    
+    def get_absolute_url(self):
+        return reverse('main/')
+    
     
 

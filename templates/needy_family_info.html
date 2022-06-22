@@ -1,0 +1,126 @@
+{% extends "base.html" %} {% load static %} {% block title %}
+
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<link rel="stylesheet" href="{% static 'css/style2.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/map.css'%}" />
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+<script type="module" src="{% static 'js/map.js' %}"></script>
+
+<title>{{needy.user.username}}</title>
+{% endblock title %} {% block category %}
+<li>
+    <a class="menu__item " href="{% url 'needy_list' %}">
+        <span class="material-icons">
+                                analytics
+                            </span>
+        <div class="menu__text">Басты бет</div>
+    </a>
+</li>
+<li>
+    <a class="menu__item" href="{% url 'event_list' %}">
+        <span class="material-icons">
+                                help
+                            </span>
+        <div class="menu__text">Аударылымдар</div>
+    </a>
+</li>
+<li>
+    <a class="menu__item " href="{% url 'needy_list_detail' %}">
+        <span class="material-icons">
+                                people
+                            </span>
+        <div class="menu__text">Мұқтаждар</div>
+    </a>
+
+</li>
+<li>
+    <a class="menu__item active" href="{% url 'needy_family_list' %}">
+        <span class="material-icons">
+                                family_restroom
+                            </span>
+        <div class="menu__text">Мұқтаж отбасылар</div>
+    </a>
+
+</li>
+
+<div class="divider"></div>
+
+<li>
+
+    <a class="menu__item" href="{% url 'logout' %}">
+        <span class="material-icons">
+                                logout
+                            </span>
+        <div class="menu__text">Шығу</div>
+    </a>
+</li>
+{% endblock category %} {% block content %}
+<div class="content-bar">
+    <div class="content-table">
+        <div class="containers">
+
+            {% for geomap_item in geomap_items %}
+            <div class="name"></div>
+
+            <div class="img66"> <img height="211px" width="213px" src="
+            {% if geomap_item.needy_family.first.user.image %}
+            {{geomap_item.needy_family.first.user.image.url}}
+            {% else %}
+             {% static 'images/default2.png' %}
+            {% endif %}"> </div>
+
+            <div class="forms__inner">
+                <li class="form">
+
+                    <div class="forms">
+                        <div class="forms__type">Отбасының үлкені</div>
+                        <div class="forms__value">{{geomap_item.needy_family.first.user.username}}</div>
+                    </div>
+                    <div class="forms">
+                        <div class="forms__type">Мекенжайы</div>
+                        <div class="forms__value">{{geomap_item.address}}</div>
+                    </div>
+                    <div class="forms">
+                        <div class="forms__type">Жағдайы</div>
+                        <div class="forms__value">{{geomap_item.needy_family.first.status}}</div>
+                    </div>
+                    <div class="forms">
+                        <div class="forms__type">Ауылды округ</div>
+                        <div class="forms__value">{{geomap_item.region}}</div>
+                    </div>
+                    <div class="forms">
+                        <div class="forms__type">Елдімекен</div>
+                        <div class="forms__value">{{geomap_item.eldimeken}}</div>
+                    </div>
+
+
+                </li>
+                <li class="form">
+                    <div class="forms">
+                        <div class="forms__type">Адамдар:</div>
+                        <div class="forms__type__user">
+                            {% for needy in geomap_item.needy_family.all %}
+                            <a href="{% url 'needy_info' needy.id %}" style="text-decoration: none; color:black;">
+                                <div class="forms__value">{{needy.user.username}}</div>
+                            </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                </li>
+
+
+            </div>
+            <div>{% include "geomap/common.html" %}</div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</div>
+
+
+{% endblock content %}

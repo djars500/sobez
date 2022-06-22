@@ -1,0 +1,66 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> {% block title %} {% endblock title %}
+</head>
+
+<body>
+    <div class="wrapper_category">
+        <div class="main">
+            <div class="sidebar__category disabled" id="sidebar__category">
+                <div class="logo">
+                    <div id="menu-burger" class="menu-burger">
+                        <span class="material-icons">
+                            menu
+                        </span>
+                    </div>
+                    <a href="{% url 'main' %}"><img width="32px" src="{% static 'images/logo.png' %}" height="32px" class="logo__img"></a>
+                    <a href="{% url 'main' %}" style="text-decoration:none;">
+                        <div class="logo__text">Собес</div>
+                    </a>
+                </div>
+                <ul class="menu__category">
+                    {% block category %} {% endblock category %}
+
+
+                </ul>
+            </div>
+            <div class="content larged" id="content">
+                <div class="app-bar">
+                    <div class="app-bar__left">
+                    </div>
+                    <div class="app-bar__right">
+                        <div class="app-bar__icons">
+
+                            <span class="material-icons">
+                                search
+                            </span>
+                        </div>
+                        <div class="vertical-divider"></div>
+                        <div class="profile">
+                            <div class="profile__name">{{request.user.email}}</div>
+                            <img class="profile__img" width=40px src="{% if request.user.image %}{{request.user.image.url}}{% endif %}" alt="">
+                        </div>
+                    </div>
+                </div>
+
+                {% block content %} {% endblock content %}
+
+
+
+
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/main.js' %}"></script>
+
+</body>
+
+</html>
